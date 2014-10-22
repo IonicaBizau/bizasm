@@ -76,8 +76,24 @@
           </packing>
         </child>
         <child>
-          <widget class="Gtk.Image" id="image3">
+          <widget class="Gtk.VPaned" id="vpaned2">
             <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Position">31</property>
+            <child>
+              <widget class="Gtk.Label" id="label1">
+                <property name="MemberName" />
+                <property name="Xalign">0</property>
+              </widget>
+              <packing>
+                <property name="Resize">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Image" id="image4">
+                <property name="MemberName" />
+              </widget>
+            </child>
           </widget>
         </child>
       </widget>

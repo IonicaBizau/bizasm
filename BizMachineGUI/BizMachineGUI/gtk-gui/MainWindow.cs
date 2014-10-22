@@ -12,7 +12,9 @@ public partial class MainWindow
 	private global::Gtk.Action HowToUseAction;
 	private global::Gtk.VPaned vpaned1;
 	private global::Gtk.MenuBar menubar1;
-	private global::Gtk.Image image3;
+	private global::Gtk.VPaned vpaned2;
+	private global::Gtk.Label label1;
+	private global::Gtk.Image image4;
 
 	protected virtual void Build ()
 	{
@@ -59,9 +61,22 @@ public partial class MainWindow
 		global::Gtk.Paned.PanedChild w2 = ((global::Gtk.Paned.PanedChild)(this.vpaned1 [this.menubar1]));
 		w2.Resize = false;
 		// Container child vpaned1.Gtk.Paned+PanedChild
-		this.image3 = new global::Gtk.Image ();
-		this.image3.Name = "image3";
-		this.vpaned1.Add (this.image3);
+		this.vpaned2 = new global::Gtk.VPaned ();
+		this.vpaned2.CanFocus = true;
+		this.vpaned2.Name = "vpaned2";
+		this.vpaned2.Position = 31;
+		// Container child vpaned2.Gtk.Paned+PanedChild
+		this.label1 = new global::Gtk.Label ();
+		this.label1.Name = "label1";
+		this.label1.Xalign = 0F;
+		this.vpaned2.Add (this.label1);
+		global::Gtk.Paned.PanedChild w3 = ((global::Gtk.Paned.PanedChild)(this.vpaned2 [this.label1]));
+		w3.Resize = false;
+		// Container child vpaned2.Gtk.Paned+PanedChild
+		this.image4 = new global::Gtk.Image ();
+		this.image4.Name = "image4";
+		this.vpaned2.Add (this.image4);
+		this.vpaned1.Add (this.vpaned2);
 		this.Add (this.vpaned1);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
