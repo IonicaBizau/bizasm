@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3673A768-844A-4C50-85D8-60B3E1E0946A}</ProjectGuid>
+    <ProjectGuid>{E8FB3813-95CA-4A34-8597-DD58F612890F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>BizMachine</RootNamespace>
     <AssemblyName>BizMachine</AssemblyName>
