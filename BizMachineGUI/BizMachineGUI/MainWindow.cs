@@ -1,6 +1,5 @@
 using System;
 using Gtk;
-using System.Windows.Forms;
 using Interpreter;
 
 public partial class MainWindow: Gtk.Window
