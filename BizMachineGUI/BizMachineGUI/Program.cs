@@ -2,6 +2,8 @@ using System;
 using Gtk;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Interpreter
 {
@@ -219,8 +221,88 @@ namespace BizMachineGUI
 			win.SetImageSrc (path);
 		}
 
+		private static byte[] BizMemory;
+		private static ushort StartAddr;
+		private static ushort ExecAddr;
+		private static ushort InstructionPointer;
+		private static byte Register_A;
+		private static byte Register_B;
+		private static ushort Register_X;
+		private static ushort Register_Y;
+		private static ushort Register_D;
+		private static void UpdateRegisterStatus()
+		{
+			string strRegisters = "";
+			strRegisters = "Register A = $" + Register_A.ToString("X").PadLeft(2, '0');
+			strRegisters += " Register B = $" + Register_B.ToString("X").PadLeft(2, '0');
+			strRegisters += " Register D = $" + Register_D.ToString("X").PadLeft(4, '0');
+			strRegisters += "\nRegister X = $" + Register_X.ToString("X").PadLeft(4, '0');
+			strRegisters += " Register Y = $" + Register_Y.ToString("X").PadLeft(4, '0');
+			strRegisters += " Instruction Pointer = $" + InstructionPointer.ToString("X").PadLeft(4, '0');
+			win.UpdateRegisterOutput (strRegisters);
+		}
+
+		private static void SetRegisterD()
+		{
+			Register_D = (ushort)(Register_A << 8 + Register_B);
+		}
+
+		private static void InterpretProgram(ushort ExecAddr, ushort ProgLength)
+		{
+			ProgLength = 64000;
+			while (ProgLength > 0)
+			{
+				byte Instruction = BizMemory[InstructionPointer];
+				ProgLength--;
+				if (Instruction == 0x02) // LDX #<value>
+				{
+					Register_X = (ushort)((BizMemory[(InstructionPointer +
+					                                  2)]) << 8);
+					Register_X += BizMemory[(InstructionPointer + 1)];
+					ProgLength -= 2;
+					InstructionPointer += 3;
+					UpdateRegisterStatus();
+					continue;
+				}
+				if (Instruction == 0x01) // LDA #<value>
+				{
+					Register_A = BizMemory[(InstructionPointer + 1)];
+					SetRegisterD();
+					ProgLength -= 1;
+					InstructionPointer += 2;
+					UpdateRegisterStatus();
+					continue;
+				}
+				if (Instruction == 0x03) // STA ,X
+				{
+					BizMemory[Register_X] = Register_A;
+					Poke(Register_X, Register_A);
+					InstructionPointer++;
+					UpdateRegisterStatus();
+					continue;
+				}
+				if (Instruction == 0x04) // END
+				{
+					InstructionPointer++;
+					UpdateRegisterStatus();
+					break;
+				}
+			}
+		}
+
 		public static void ExecuteProgram (string path)
 		{
+
+			BizMemory = new byte[65535];
+			StartAddr = 0;
+			ExecAddr = 0;
+			Register_A = 0;
+			Register_B = 0;
+			Register_D = 0;
+			Register_X = 0;
+			Register_Y = 0;
+			UpdateRegisterStatus();
+
 			ScreenMemoryLocation = 0xA000;
 			m_ScreenMemory = new byte[4000];
 			for (int i = 0; i < 4000; i += 2)
@@ -228,21 +310,45 @@ namespace BizMachineGUI
 				m_ScreenMemory[i] = 32;
 				m_ScreenMemory[i + 1] = 7;
 			}
-			Poke(0xa000, 73);
-			Poke(0xa002, 111);
-			Poke(0xa004, 110);
-			Poke(0xa006, 105);
-			Poke(0xa008, 99);
-			Poke(0xa001, Convert.ToByte("00011111", 2));
-			Poke(0xa010, 97);
+
+			BinaryReader br;
+			System.IO.FileStream fs = new FileStream(path, System.IO.FileMode.Open);
+			br = new System.IO.BinaryReader(fs);
+			byte Magic1;
+			byte Magic2;
+			byte Magic3;
+
+			Magic1 = br.ReadByte();
+			Magic2 = br.ReadByte();
+			Magic3 = br.ReadByte();
+
+			if (Magic1.ToString() + Magic2.ToString() + Magic3.ToString() != "BIZ")
+			{
+				MessageBox.Show("This is not a valid biz file!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			StartAddr = br.ReadUInt16();
+			ExecAddr = br.ReadUInt16();
+			ushort Counter = 0;
+			while ((br.PeekChar() != -1))
+			{
+				BizMemory[(StartAddr + Counter)] = br.ReadByte();
+				Counter++;
+			}
+			br.Close();
+			fs.Close();
+
+			InstructionPointer = ExecAddr;
+			InterpretProgram(ExecAddr, Counter);
 		}
 
 		public static void Main (string[] args)
 		{
-			Application.Init ();
+			Gtk.Application.Init ();
 			win = new MainWindow ();
 			win.Show ();
-			Application.Run ();
+			Gtk.Application.Run ();
 		}
 	}
 }
