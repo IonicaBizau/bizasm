@@ -49,7 +49,7 @@ namespace BizMachineGUI
 			if (MemLoc < 0 || MemLoc > 3999)
 				return;
 			m_ScreenMemory[MemLoc] = Value;
-			B32Screen_Paint ();
+			Screen_Paint ();
 		}
 
 		public static byte Peek(ushort Address)
@@ -69,7 +69,7 @@ namespace BizMachineGUI
 		}
 
 		static int c = -1;
-		private static void B32Screen_Paint()
+		private static void Screen_Paint()
 		{
 			Bitmap bmp = new Bitmap(600, 200);
 			Graphics bmpGraphics = Graphics.FromImage(bmp);
@@ -324,7 +324,9 @@ namespace BizMachineGUI
 
 			if (Magic1 != 'B' || Magic2 != 'I' || Magic3 != 'Z')
 			{
-				MessageBox.Show("This is not a valid biz file!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageDialog md = new MessageDialog (win, DialogFlags.Modal, MessageType.Error, ButtonsType.Ok, "This is not a valid biz file!");
+				md.Run ();
+				md.Destroy();
 				return;
 			}
 
