@@ -32,11 +32,19 @@ public partial class MainWindow: Gtk.Window
 
 	protected void OpenFile (object sender, EventArgs e)
 	{
-		OpenFileDialog ofd = new OpenFileDialog ();
-		ofd.Filter = "BizMachine|*.biz";
-		DialogResult result = ofd.ShowDialog();
-		if (result == DialogResult.OK) {
-			Interpreter.Interpreter.ExecuteProgram (ofd.FileName);
+		FileChooserDialog fc = new Gtk.FileChooserDialog ("Choose the file to open",
+		                                                this,
+		                                                FileChooserAction.Open,
+		                                                "Cancel", ResponseType.Cancel,
+		                                                "Open", ResponseType.Accept
+		);
+
+		//fc.Filter = "*.biz";
+		if (fc.Run() == (int)ResponseType.Accept) 
+		{
+			Interpreter.Interpreter.ExecuteProgram (fc.Filename);
 		}
+
+		fc.Destroy();
 	}
 }
