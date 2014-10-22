@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembler", "Assembler\Assembler.csproj", "{B1976439-67F1-4802-B783-A379AEED30DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1976439-67F1-4802-B783-A379AEED30DB}.Debug|x86.ActiveCfg = Debug|x86
+		{B1976439-67F1-4802-B783-A379AEED30DB}.Debug|x86.Build.0 = Debug|x86
+		{B1976439-67F1-4802-B783-A379AEED30DB}.Release|x86.ActiveCfg = Release|x86
+		{B1976439-67F1-4802-B783-A379AEED30DB}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembler\Assembler.csproj
+	EndGlobalSection
+EndGlobal
