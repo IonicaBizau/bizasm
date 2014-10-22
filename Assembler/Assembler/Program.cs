@@ -27,6 +27,7 @@ namespace Assembler
 			if (args.Length < 1) {
 				Console.WriteLine ("Missing input file.");
 				//Environment.Exit (1);
+				// TODO
 				return "/home/ionicabizau/Documents/bizasm/Test.asm";
 			}
 
@@ -39,6 +40,7 @@ namespace Assembler
 			if (args.Length < 2) {
 				Console.WriteLine ("Missing output file.");
 				//Environment.Exit (1);
+				// TODO
 				return "/home/ionicabizau/Documents/bizasm/out";
 			}
 
@@ -285,8 +287,19 @@ namespace Assembler
 			System.IO.FileStream fs = new System.IO.FileStream(outputFilePath, System.IO.FileMode.Create);
 			output = new System.IO.BinaryWriter(fs);
 			input = System.IO.File.OpenText(inputFilePath);
-			SourceProgram = input.ReadToEnd();
+
+			string[] lines = input.ReadToEnd ().Split('\n');
 			input.Close();
+
+			for (int i = 0; i < lines.Length; ++i) {
+				string cLine = lines [i];
+				if (cLine.StartsWith("#")) {
+					continue;
+				}
+				SourceProgram += cLine + "\n";
+			}
+
+
 
 			output.Write('B');
 			output.Write('I');
