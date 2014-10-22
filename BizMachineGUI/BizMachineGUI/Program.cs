@@ -3,6 +3,17 @@ using Gtk;
 using System.Drawing;
 using System.Drawing.Imaging;
 
+namespace Interpreter
+{
+	public static class Interpreter
+	{
+		public static void ExecuteProgram(string path) {
+			BizMachineGUI.MainClass.ExecuteProgram (path);
+		}
+	}
+}
+
+
 namespace BizMachineGUI
 {
 	class MainClass
@@ -208,11 +219,8 @@ namespace BizMachineGUI
 			win.SetImageSrc (path);
 		}
 
-		public static void Main (string[] args)
+		public static void ExecuteProgram (string path)
 		{
-			Application.Init ();
-			win = new MainWindow ();
-			win.Show ();
 			ScreenMemoryLocation = 0xA000;
 			m_ScreenMemory = new byte[4000];
 			for (int i = 0; i < 4000; i += 2)
@@ -227,6 +235,13 @@ namespace BizMachineGUI
 			Poke(0xa008, 99);
 			Poke(0xa001, Convert.ToByte("00011111", 2));
 			Poke(0xa010, 97);
+		}
+
+		public static void Main (string[] args)
+		{
+			Application.Init ();
+			win = new MainWindow ();
+			win.Show ();
 			Application.Run ();
 		}
 	}

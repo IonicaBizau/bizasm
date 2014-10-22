@@ -1,5 +1,7 @@
 using System;
 using Gtk;
+using System.Windows.Forms;
+using Interpreter;
 
 public partial class MainWindow: Gtk.Window
 {	
@@ -12,13 +14,22 @@ public partial class MainWindow: Gtk.Window
 	public MainWindow (): base (Gtk.WindowType.Toplevel)
 	{
 		Build ();
-		img = image2;
-
+		img = image3;
 	}
 
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 	{
-		Application.Quit ();
+		Gtk.Application.Quit ();
 		a.RetVal = true;
+	}
+
+	protected void OpenFile (object sender, EventArgs e)
+	{
+		OpenFileDialog ofd = new OpenFileDialog ();
+		ofd.Filter = "BizMachine|*.biz";
+		DialogResult result = ofd.ShowDialog();
+		if (result == DialogResult.OK) {
+			Interpreter.Interpreter.ExecuteProgram (ofd.FileName);
+		}
 	}
 }
