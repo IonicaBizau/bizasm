@@ -322,7 +322,7 @@ namespace BizMachineGUI
 			Magic2 = br.ReadByte();
 			Magic3 = br.ReadByte();
 
-			if (Magic1.ToString() + Magic2.ToString() + Magic3.ToString() != "BIZ")
+			if (Magic1 != 'B' || Magic2 != 'I' || Magic3 != 'Z')
 			{
 				MessageBox.Show("This is not a valid biz file!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
