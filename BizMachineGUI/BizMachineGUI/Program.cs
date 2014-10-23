@@ -230,7 +230,7 @@ namespace BizMachineGUI
 		private static ushort Register_Y;
 		private static ushort Register_D;
 		private static void UpdateRegisterStatus()
-		{
+		{	
 			string strRegisters = "";
 			strRegisters = "Register A = $" + Register_A.ToString("X").PadLeft(2, '0');
 			strRegisters += " Register B = $" + Register_B.ToString("X").PadLeft(2, '0');
