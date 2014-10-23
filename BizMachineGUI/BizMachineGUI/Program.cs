@@ -296,6 +296,8 @@ namespace BizMachineGUI
 
 		public static void ExecuteProgram (string path)
 		{
+			Uri uri = new Uri(Path.Combine(Directory.GetCurrentDirectory(), path));
+			path = Path.GetFullPath (uri.AbsolutePath);
 
 			BizMemory = new byte[65535];
 			StartAddr = 0;
@@ -357,6 +359,9 @@ namespace BizMachineGUI
 			Gtk.Application.Init ();
 			win = new MainWindow ();
 			win.Show ();
+			if (args.Length == 1) {
+				ExecuteProgram(args[0]);	
+			}
 			Gtk.Application.Run ();
 		}
 	}
