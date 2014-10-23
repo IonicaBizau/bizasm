@@ -8,7 +8,8 @@ namespace Interpreter
 {
 	public static class Interpreter
 	{
-		public static void ExecuteProgram(string path) {
+		public static void ExecuteProgram(string path)
+		{
 			BizMachineGUI.MainClass.ExecuteProgram (path);
 		}
 	}
@@ -276,13 +277,13 @@ namespace BizMachineGUI
 				{
 					BizMemory[Register_X] = Register_A;
 					Poke(Register_X, Register_A);
-					InstructionPointer++;
+					++InstructionPointer;
 					UpdateRegisterStatus();
 					continue;
 				}
 				if (Instruction == 0x04) // END
 				{
-					InstructionPointer++;
+					++InstructionPointer;
 					UpdateRegisterStatus();
 					break;
 				}
@@ -335,7 +336,7 @@ namespace BizMachineGUI
 			while ((br.PeekChar() != -1))
 			{
 				BizMemory[(StartAddr + Counter)] = br.ReadByte();
-				Counter++;
+				++Counter;
 			}
 			br.Close();
 			fs.Close();

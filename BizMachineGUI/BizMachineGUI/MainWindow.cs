@@ -9,12 +9,14 @@ public partial class MainWindow: Gtk.Window
 	static Gtk.Image img = new Gtk.Image();
 	static Gtk.Label registerLabel = new Gtk.Label ();
 
-	public void SetImageSrc(string src) {
+	public void SetImageSrc(string src)
+	{
 		//this.image1.Pixbuf = "";
 		img.Pixbuf = new Gdk.Pixbuf (src);
 	}
 
-	public void UpdateRegisterOutput(string output) {
+	public void UpdateRegisterOutput(string output)
+	{
 		registerLabel.Text = output;
 	}
 
@@ -34,11 +36,12 @@ public partial class MainWindow: Gtk.Window
 
 	protected void OpenFile (object sender, EventArgs e)
 	{
-		FileChooserDialog fc = new Gtk.FileChooserDialog ("Choose the file to open",
-		                                                this,
-		                                                FileChooserAction.Open,
-		                                                "Cancel", ResponseType.Cancel,
-		                                                "Open", ResponseType.Accept
+		FileChooserDialog fc = new Gtk.FileChooserDialog (
+			"Choose the file to open",
+            this,
+            FileChooserAction.Open,
+            "Cancel", ResponseType.Cancel,
+            "Open", ResponseType.Accept
 		);
 
 		//fc.Filter = "*.biz";

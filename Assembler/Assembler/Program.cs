@@ -24,7 +24,8 @@ namespace Assembler
 		static string getInputFilePath (string[] args)
 		{
 
-			if (args.Length < 1) {
+			if (args.Length < 1)
+			{
 				Console.WriteLine ("Missing input file.");
 				//Environment.Exit (1);
 				// TODO
@@ -37,7 +38,8 @@ namespace Assembler
 
 		static string getOutputFilePath (string[] args)
 		{
-			if (args.Length < 2) {
+			if (args.Length < 2)
+			{
 				Console.WriteLine ("Missing output file.");
 				//Environment.Exit (1);
 				// TODO
@@ -51,7 +53,7 @@ namespace Assembler
 		private static void DoEnd(System.IO.BinaryWriter OutputFile, bool
 		                   IsLabelScan)
 		{
-			AsLength++;
+			++AsLength;
 			if (!IsLabelScan)
 			{
 				OutputFile.Write((byte)0x04);
@@ -62,7 +64,7 @@ namespace Assembler
 		{
 			while (char.IsWhiteSpace(SourceProgram[CurrentNdx]))
 			{
-				CurrentNdx++;
+				++CurrentNdx;
 			}
 		}
 
@@ -73,7 +75,7 @@ namespace Assembler
 			{
 				Registers r;
 				byte opcode = 0x00;
-				CurrentNdx++;
+				++CurrentNdx;
 				EatWhiteSpaces();
 				r = ReadRegister();
 				switch (r)
@@ -97,13 +99,13 @@ namespace Assembler
 			string sval = "";
 			if (SourceProgram[CurrentNdx] == '$')
 			{
-				CurrentNdx++;
+				++CurrentNdx;
 				IsHex = true;
 			}
 			while (char.IsLetterOrDigit(SourceProgram[CurrentNdx]))
 			{
 				sval = sval + SourceProgram[CurrentNdx];
-				CurrentNdx++;
+				++CurrentNdx;
 			}
 			if (IsHex)
 			{
@@ -123,13 +125,13 @@ namespace Assembler
 			string sval = "";
 			if (SourceProgram[CurrentNdx] == '$')
 			{
-				CurrentNdx++;
+				++CurrentNdx;
 				IsHex = true;
 			}
 			while (char.IsLetterOrDigit(SourceProgram[CurrentNdx]))
 			{
 				sval = sval + SourceProgram[CurrentNdx];
-				CurrentNdx++;
+				++CurrentNdx;
 			}
 			if (IsHex)
 			{
@@ -149,11 +151,11 @@ namespace Assembler
 			{
 				if (SourceProgram[CurrentNdx] == ':')
 				{
-					CurrentNdx++;
+					++CurrentNdx;
 					break;
 				}
 				lblname = lblname + SourceProgram[CurrentNdx];
-				CurrentNdx++;
+				++CurrentNdx;
 			}
 			return lblname.ToUpper();
 		}
@@ -161,19 +163,24 @@ namespace Assembler
 		private static Registers ReadRegister()
 		{
 			Registers r = Registers.Unknown;
-			if (SourceProgram [CurrentNdx].ToString ().ToUpper () == "X") {
+			if (SourceProgram [CurrentNdx].ToString ().ToUpper () == "X")
+			{
 				r = Registers.X;
-			} else if (SourceProgram [CurrentNdx].ToString ().ToUpper () == "Y") {
+			} else if (SourceProgram [CurrentNdx].ToString ().ToUpper () == "Y")
+			{
 				r = Registers.Y;
-			} else if (SourceProgram [CurrentNdx].ToString ().ToUpper () == "D") {
+			} else if (SourceProgram [CurrentNdx].ToString ().ToUpper () == "D")
+			{
 				r = Registers.D;
-			} else if (SourceProgram [CurrentNdx].ToString ().ToUpper () == "A") {
+			} else if (SourceProgram [CurrentNdx].ToString ().ToUpper () == "A")
+			{
 				r = Registers.A;
-			} else if (SourceProgram [CurrentNdx].ToString ().ToUpper () == "B") {
+			} else if (SourceProgram [CurrentNdx].ToString ().ToUpper () == "B")
+			{
 				r = Registers.B;
 			}
 
-			CurrentNdx++;
+			++CurrentNdx;
 			return r;
 		}
 
@@ -183,7 +190,7 @@ namespace Assembler
 			EatWhiteSpaces();
 			if (SourceProgram[CurrentNdx] == '#')
 			{
-				CurrentNdx++;
+				++CurrentNdx;
 				ushort val = ReadWordValue();
 				AsLength += 3;
 				if (!IsLabelScan)
@@ -200,7 +207,7 @@ namespace Assembler
 			EatWhiteSpaces();
 			if (SourceProgram[CurrentNdx] == '#')
 			{
-				CurrentNdx++;
+				++CurrentNdx;
 				byte val = ReadByteValue();
 				AsLength += 2;
 				if (!IsLabelScan)
@@ -218,7 +225,7 @@ namespace Assembler
 			while (!(char.IsWhiteSpace(SourceProgram[CurrentNdx])))
 			{
 				Mneumonic = Mneumonic + SourceProgram[CurrentNdx];
-				CurrentNdx++;
+				++CurrentNdx;
 			}
 			if (Mneumonic.ToUpper() == "LDX") InterpretLDX(OutputFile,
 			                                               IsLabelScan);
@@ -226,14 +233,17 @@ namespace Assembler
 			                                               IsLabelScan);
 			if (Mneumonic.ToUpper() == "STA") InterpretSTA(OutputFile,
 			                                               IsLabelScan);
-			if (Mneumonic.ToUpper() == "END") { IsEnd = true;
+			if (Mneumonic.ToUpper() == "END")
+			{
+				IsEnd = true;
 				DoEnd(OutputFile,IsLabelScan); EatWhiteSpaces(); ExecutionAddress =
-					(ushort)LabelTable[(GetLabelName())]; return; }
+					(ushort)LabelTable[(GetLabelName())]; return;
+			}
 			while (SourceProgram[CurrentNdx] != '\n')
 			{
-				CurrentNdx++;
+				++CurrentNdx;
 			}
-			CurrentNdx++;
+			++CurrentNdx;
 		}
 
 		private static void LabelScan(System.IO.BinaryWriter OutputFile, bool IsLabelScan)
@@ -243,8 +253,8 @@ namespace Assembler
 				// Must be a label
 				if (IsLabelScan) LabelTable.Add(GetLabelName(), AsLength);
 				while (SourceProgram[CurrentNdx] != '\n')
-					CurrentNdx++;
-				CurrentNdx++;
+					++CurrentNdx;
+				++CurrentNdx;
 				return;
 			}
 			EatWhiteSpaces();
@@ -291,9 +301,11 @@ namespace Assembler
 			string[] lines = input.ReadToEnd ().Split('\n');
 			input.Close();
 
-			for (int i = 0; i < lines.Length; ++i) {
+			for (int i = 0; i < lines.Length; ++i)
+			{
 				string cLine = lines [i];
-				if (cLine.StartsWith("#")) {
+				if (cLine.StartsWith("#"))
+				{
 					continue;
 				}
 				SourceProgram += cLine + "\n";
