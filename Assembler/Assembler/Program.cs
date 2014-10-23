@@ -32,7 +32,7 @@ namespace Assembler
 				return "/home/ionicabizau/Documents/bizasm/Test.asm";
 			}
 
-			Uri uri = new Uri(Path.Combine(Directory.GetCurrentDirectory(), args[0]));   
+			Uri uri = new Uri(Path.Combine(Directory.GetCurrentDirectory(), args[0]));
 			return Path.GetFullPath(uri.AbsolutePath);
 		}
 
@@ -46,7 +46,7 @@ namespace Assembler
 				return "/home/ionicabizau/Documents/bizasm/out";
 			}
 
-			Uri uri = new Uri(Path.Combine(Directory.GetCurrentDirectory(), args[1]));   
+			Uri uri = new Uri(Path.Combine(Directory.GetCurrentDirectory(), args[1]));
 			return Path.GetFullPath(uri.AbsolutePath);
 		}
 
