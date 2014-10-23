@@ -68,30 +68,6 @@ namespace Assembler
 			}
 		}
 
-		private static void InterpretSTA(System.IO.BinaryWriter OutputFile, bool IsLabelScan)
-		{
-			EatWhiteSpaces();
-			if (SourceProgram[CurrentNdx] == ',')
-			{
-				Registers r;
-				byte opcode = 0x00;
-				++CurrentNdx;
-				EatWhiteSpaces();
-				r = ReadRegister();
-				switch (r)
-				{
-					case Registers.X:
-					opcode = 0x03;
-					break;
-				}
-				AsLength += 1;
-				if (!IsLabelScan)
-				{
-					OutputFile.Write(opcode);
-				}
-			}
-		}
-
 		private static ushort ReadWordValue()
 		{
 			ushort val = 0;
@@ -184,25 +160,7 @@ namespace Assembler
 			return r;
 		}
 
-		private static void InterpretLDX(System.IO.BinaryWriter OutputFile, bool
-		                          IsLabelScan)
-		{
-			EatWhiteSpaces();
-			if (SourceProgram[CurrentNdx] == '#')
-			{
-				++CurrentNdx;
-				ushort val = ReadWordValue();
-				AsLength += 3;
-				if (!IsLabelScan)
-				{
-					OutputFile.Write((byte)0x02);
-					OutputFile.Write(val);
-				}
-			}
-		}
-
-		private static void InterpretLDA(System.IO.BinaryWriter OutputFile, bool
-		                          IsLabelScan)
+		private static void InterpretLDA(System.IO.BinaryWriter OutputFile, bool IsLabelScan)
 		{
 			EatWhiteSpaces();
 			if (SourceProgram[CurrentNdx] == '#')
@@ -218,8 +176,47 @@ namespace Assembler
 			}
 		}
 
-		private static void ReadMneumonic(System.IO.BinaryWriter OutputFile, bool
-		                           IsLabelScan)
+		private static void InterpretLDX(System.IO.BinaryWriter OutputFile, bool IsLabelScan)
+		{
+			EatWhiteSpaces();
+			if (SourceProgram[CurrentNdx] == '#')
+			{
+				++CurrentNdx;
+				ushort val = ReadWordValue();
+				AsLength += 3;
+				if (!IsLabelScan)
+				{
+					OutputFile.Write((byte)0x02);
+					OutputFile.Write(val);
+				}
+			}
+		}
+
+		private static void InterpretSTA(System.IO.BinaryWriter OutputFile, bool IsLabelScan)
+		{
+			EatWhiteSpaces();
+			if (SourceProgram[CurrentNdx] == ',')
+			{
+				Registers r;
+				byte opcode = 0x00;
+				++CurrentNdx;
+				EatWhiteSpaces();
+				r = ReadRegister();
+				switch (r)
+				{
+					case Registers.X:
+					opcode = 0x03;
+					break;
+				}
+				AsLength += 1;
+				if (!IsLabelScan)
+				{
+					OutputFile.Write(opcode);
+				}
+			}
+		}
+
+		private static void ReadMneumonic(System.IO.BinaryWriter OutputFile, bool IsLabelScan)
 		{
 			string Mneumonic = "";
 			while (!(char.IsWhiteSpace(SourceProgram[CurrentNdx])))
@@ -227,18 +224,18 @@ namespace Assembler
 				Mneumonic = Mneumonic + SourceProgram[CurrentNdx];
 				++CurrentNdx;
 			}
-			if (Mneumonic.ToUpper() == "LDX") InterpretLDX(OutputFile,
-			                                               IsLabelScan);
-			if (Mneumonic.ToUpper() == "LDA") InterpretLDA(OutputFile,
-			                                               IsLabelScan);
-			if (Mneumonic.ToUpper() == "STA") InterpretSTA(OutputFile,
-			                                               IsLabelScan);
+			if (Mneumonic.ToUpper() == "LDX") InterpretLDX(OutputFile, IsLabelScan);
+			if (Mneumonic.ToUpper() == "LDA") InterpretLDA(OutputFile, IsLabelScan);
+			if (Mneumonic.ToUpper() == "STA") InterpretSTA(OutputFile, IsLabelScan);
 			if (Mneumonic.ToUpper() == "END")
 			{
 				IsEnd = true;
-				DoEnd(OutputFile,IsLabelScan); EatWhiteSpaces(); ExecutionAddress =
-					(ushort)LabelTable[(GetLabelName())]; return;
+				DoEnd(OutputFile,IsLabelScan);
+				EatWhiteSpaces();
+				ExecutionAddress = (ushort)LabelTable[(GetLabelName())];
+				return;
 			}
+
 			while (SourceProgram[CurrentNdx] != '\n')
 			{
 				++CurrentNdx;
@@ -265,12 +262,17 @@ namespace Assembler
 		{
 			CurrentNdx = 0;
 			while (IsEnd == false)
-				LabelScan(OutputFile, true);
+			{
+				LabelScan (OutputFile, true);
+			}
+
 			IsEnd = false;
 			CurrentNdx = 0;
 			AsLength = Convert.ToUInt16("0", 16);
 			while (IsEnd == false)
-				LabelScan(OutputFile, false);
+			{
+				LabelScan (OutputFile, false);
+			}
 		}
 
 		public static void Main (string[] args)
@@ -280,7 +282,8 @@ namespace Assembler
 			string inputFilePath = getInputFilePath (args);
 			string outputFilePath = getOutputFilePath (args);
 
-			Console.WriteLine ("Input:\n{0}", inputFilePath);
+			Console.WriteLine ("Input file:  ", inputFilePath);
+			Console.WriteLine ("Output file: ", outputFilePath);
 
 			// Initialize values
 			LabelTable = new System.Collections.Hashtable(50);
@@ -301,6 +304,7 @@ namespace Assembler
 			string[] lines = input.ReadToEnd ().Split('\n');
 			input.Close();
 
+			// Remove commented lines (the ones that start with "#")
 			for (int i = 0; i < lines.Length; ++i)
 			{
 				string cLine = lines [i];
@@ -311,16 +315,22 @@ namespace Assembler
 				SourceProgram += cLine + "\n";
 			}
 
-
-
+			// Magic header
 			output.Write('B');
 			output.Write('I');
 			output.Write('Z');
+
+			// Starting address
 			output.Write(Convert.ToUInt16("0", 16));
 			output.Write((ushort)0);
+
+			// Convert to byte code
 			Parse(output);
+
 			output.Seek(5, System.IO.SeekOrigin.Begin);
 			output.Write(ExecutionAddress);
+
+			// Close output stream
 			output.Close();
 			fs.Close();
 		}

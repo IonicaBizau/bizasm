@@ -50,6 +50,7 @@ public partial class MainWindow
 		this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 		// Container child MainWindow.Gtk.Container+ContainerChild
 		this.vpaned1 = new global::Gtk.VPaned ();
+		this.vpaned1.HeightRequest = 10;
 		this.vpaned1.CanFocus = true;
 		this.vpaned1.Name = "vpaned1";
 		this.vpaned1.Position = 22;

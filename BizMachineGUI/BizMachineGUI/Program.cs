@@ -254,6 +254,17 @@ namespace BizMachineGUI
 			{
 				byte Instruction = BizMemory[InstructionPointer];
 				ProgLength--;
+
+				if (Instruction == 0x01) // LDA #<value>
+				{
+					Register_A = BizMemory[(InstructionPointer + 1)];
+					SetRegisterD();
+					ProgLength -= 1;
+					InstructionPointer += 2;
+					UpdateRegisterStatus();
+					continue;
+				}
+
 				if (Instruction == 0x02) // LDX #<value>
 				{
 					Register_X = (ushort)((BizMemory[(InstructionPointer +
@@ -264,15 +275,7 @@ namespace BizMachineGUI
 					UpdateRegisterStatus();
 					continue;
 				}
-				if (Instruction == 0x01) // LDA #<value>
-				{
-					Register_A = BizMemory[(InstructionPointer + 1)];
-					SetRegisterD();
-					ProgLength -= 1;
-					InstructionPointer += 2;
-					UpdateRegisterStatus();
-					continue;
-				}
+
 				if (Instruction == 0x03) // STA ,X
 				{
 					BizMemory[Register_X] = Register_A;
@@ -281,6 +284,7 @@ namespace BizMachineGUI
 					UpdateRegisterStatus();
 					continue;
 				}
+
 				if (Instruction == 0x04) // END
 				{
 					++InstructionPointer;
@@ -314,17 +318,20 @@ namespace BizMachineGUI
 			BinaryReader br;
 			System.IO.FileStream fs = new FileStream(path, System.IO.FileMode.Open);
 			br = new System.IO.BinaryReader(fs);
-			byte Magic1;
-			byte Magic2;
-			byte Magic3;
 
-			Magic1 = br.ReadByte();
-			Magic2 = br.ReadByte();
-			Magic3 = br.ReadByte();
-
+			// Check the magic header
+			byte Magic1 = br.ReadByte();
+			byte Magic2 = br.ReadByte();
+			byte Magic3 = br.ReadByte();
 			if (Magic1 != 'B' || Magic2 != 'I' || Magic3 != 'Z')
 			{
-				MessageDialog md = new MessageDialog (win, DialogFlags.Modal, MessageType.Error, ButtonsType.Ok, "This is not a valid biz file!");
+				MessageDialog md = new MessageDialog (
+					win,
+					DialogFlags.Modal,
+					MessageType.Error,
+					ButtonsType.Ok,
+					"This is not a valid biz file!"
+				);
 				md.Run ();
 				md.Destroy();
 				return;

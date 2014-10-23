@@ -25,7 +25,6 @@ public partial class MainWindow: Gtk.Window
 		Build ();
 		img = image4;
 		registerLabel = label1;
-		//label1.ModifyFont (Pango.FontDescription("Monaco", 20f, FontStyle.Bold));
 	}
 
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)

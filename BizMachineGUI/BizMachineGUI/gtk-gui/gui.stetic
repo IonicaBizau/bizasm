@@ -54,6 +54,7 @@
     <child>
       <widget class="Gtk.VPaned" id="vpaned1">
         <property name="MemberName" />
+        <property name="HeightRequest">10</property>
         <property name="CanFocus">True</property>
         <property name="Position">22</property>
         <child>
