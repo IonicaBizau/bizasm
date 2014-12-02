@@ -51,4 +51,36 @@ public partial class MainWindow: Gtk.Window
 
 		fc.Destroy();
 	}
+
+    protected void OnAboutActionActivated(object sender, EventArgs e)
+    {
+        MessageDialog md = new MessageDialog (
+            this,
+            DialogFlags.Modal,
+            MessageType.Info,
+            ButtonsType.Ok,
+            "BizAsmGUI\n" +
+            "-----------------\n" + 
+            "An interpreter for biz files, created by BizAsm assembler.\n" +
+            "Developed by Ionică Bizău"
+        );
+        md.Title = "About";
+        md.Run ();
+        md.Destroy();
+    }
+    protected void OnHowToUseActionActivated(object sender, EventArgs e)
+    {
+        MessageDialog md = new MessageDialog (
+            this,
+            DialogFlags.Modal,
+            MessageType.Info,
+            ButtonsType.Ok,
+            "Click File > Open, choose the file and open it. "
+            + "Then it will be interpreted by this application "
+            + "and the result will appear in the console."
+        );
+        md.Title = "How to use?";
+        md.Run ();
+        md.Destroy();
+    }
 }
