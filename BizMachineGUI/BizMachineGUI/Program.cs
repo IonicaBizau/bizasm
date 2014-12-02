@@ -216,9 +216,13 @@ namespace BizMachineGUI
 				xLoc += 20;
 			}
 
-			string path = "/home/ionicabizau/Documents/bizasm/tmp-" + (++c) + ".png";
+			string path = "./tmp-" + (++c) + ".png";
 			bmp.Save (path, ImageFormat.Png);
 			win.SetImageSrc (path);
+            if(File.Exists(path))
+            {
+                File.Delete(path);
+            }
 		}
 
 		private static byte[] BizMemory;
