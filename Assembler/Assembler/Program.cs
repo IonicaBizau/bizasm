@@ -26,10 +26,7 @@ namespace Assembler
 
 			if (args.Length < 1)
 			{
-				Console.WriteLine ("Missing input file.");
-				//Environment.Exit (1);
-				// TODO
-				return "/home/ionicabizau/Documents/bizasm/Test.asm";
+                throw new Exception("Missing input file.");
 			}
 
 			Uri uri = new Uri(Path.Combine(Directory.GetCurrentDirectory(), args[0]));
@@ -40,10 +37,7 @@ namespace Assembler
 		{
 			if (args.Length < 2)
 			{
-				Console.WriteLine ("Missing output file.");
-				//Environment.Exit (1);
-				// TODO
-				return "/home/ionicabizau/Documents/bizasm/out";
+                throw new Exception("Missing output file.");
 			}
 
 			Uri uri = new Uri(Path.Combine(Directory.GetCurrentDirectory(), args[1]));
@@ -282,8 +276,8 @@ namespace Assembler
 			string inputFilePath = getInputFilePath (args);
 			string outputFilePath = getOutputFilePath (args);
 
-			Console.WriteLine ("Input file:  ", inputFilePath);
-			Console.WriteLine ("Output file: ", outputFilePath);
+            Console.WriteLine ("Input file: {0}", inputFilePath);
+            Console.WriteLine ("Output file: {0}", outputFilePath);
 
 			// Initialize values
 			LabelTable = new System.Collections.Hashtable(50);
