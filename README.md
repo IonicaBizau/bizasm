@@ -31,7 +31,7 @@ HELLO_WORLD:
  END HELLO_WORLD
 ```
 
-After assembling the code above, when running it the following result will appear:
+After assembling the code above, when running it, the following result will appear:
 
 ![Screenshot](./screenshots/1.png)
 
