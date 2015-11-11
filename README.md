@@ -50,4 +50,4 @@ Interprets the byte-code and shows the result in the console.
 ```
 
 ## License
-The code is licensed under [the MIT License](/LICENSE).
+See the [LICENSE](/LICENSE) file.
