@@ -1,0 +1,94 @@
+{
+  "name": "bizasm",
+  "version": "1.0.0",
+  "description": "My first assembler and interpreter applications.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IonicaBizau/bizasm.git"
+  },
+  "keywords": [
+    "assembler",
+    "demo"
+  ],
+  "author": "Ionică Bizău <bizauionica@gmail.com> (http://ionicabizau.net)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IonicaBizau/bizasm/issues"
+  },
+  "homepage": "https://github.com/IonicaBizau/bizasm#readme",
+  "blah": {
+    "description": [
+      {
+        "h2": "Example"
+      },
+      {
+        "code": {
+          "language": "asm",
+          "content": [
+            "# Output \"Hello\" in console",
+            "HELLO_WORLD:",
+            "",
+            " LDA #72",
+            " LDX #$A000",
+            " STA ,X",
+            "",
+            " LDA #101",
+            " LDX #$A002",
+            " STA ,X",
+            "",
+            " LDA #108",
+            " LDX #$A004",
+            " STA ,X",
+            "",
+            " LDA #108",
+            " LDX #$A006",
+            " STA ,X",
+            "",
+            " LDA #111",
+            " LDX #$A008",
+            " STA ,X",
+            "",
+            " END HELLO_WORLD"
+          ]
+        }
+      },
+      {
+        "p": "After assembling the code above, when running it, the following result will appear:"
+      },
+      {
+        "img": {
+          "title": "Screenshot",
+          "source": "./screenshots/1.png"
+        }
+      },
+      {
+        "h2": "Assembler"
+      },
+      {
+        "p": "Converts the assembly code in byte-code."
+      },
+      {
+        "code": {
+          "language": "sh",
+          "content": "$ ./Assembler/Assembler/bin/Debug/Assembler.exe input-file.asm output-file.biz"
+        }
+      },
+      {
+        "h2": "Interpreter"
+      },
+      {
+        "p": "Interprets the byte-code and shows the result in the console."
+      },
+      {
+        "code": {
+          "language": "sh",
+          "content": "$ ./BizMachineGUI/BizMachineGUI/bin/Debug/BizMachineGUI.exe output-file.biz"
+        }
+      }
+    ]
+  }
+}
