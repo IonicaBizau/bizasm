@@ -1,3 +1,4 @@
+
 # bizasm [![PayPal](https://img.shields.io/badge/%24-paypal-f39c12.svg)][paypal-donations] [![Version](https://img.shields.io/npm/v/bizasm.svg)](https://www.npmjs.com/package/bizasm) [![Downloads](https://img.shields.io/npm/dt/bizasm.svg)](https://www.npmjs.com/package/bizasm) [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/johnnyb?utm_source=github&utm_medium=button&utm_term=johnnyb&utm_campaign=github)
 
 > My first assembler and interpreter applications.
@@ -49,10 +50,11 @@ Interprets the byte-code and shows the result in the console.
 $ ./BizMachineGUI/BizMachineGUI/bin/Debug/BizMachineGUI.exe output-file.biz
 ```
 
-## How to contribute
+## :yum: How to contribute
 Have an idea? Found a bug? See [how to contribute][contributing].
 
-## License
+
+## :scroll: License
 
 [MIT][license] © [Ionică Bizău][website]
 
