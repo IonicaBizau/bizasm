@@ -1,6 +1,6 @@
 {
   "name": "bizasm",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "My first assembler and interpreter applications.",
   "main": "lib/index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "assembler",
     "demo"
   ],
-  "author": "Ionică Bizău <bizauionica@gmail.com> (http://ionicabizau.net)",
+  "author": "Ionică Bizău <bizauionica@gmail.com> (https://ionicabizau.net)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/IonicaBizau/bizasm/issues"
@@ -95,12 +95,11 @@
     "bin/",
     "app/",
     "lib/",
-    "build/",
     "dist/",
     "src/",
+    "scripts/",
     "resources/",
     "menu/",
-    "scripts/",
     "cli.js",
     "index.js"
   ]
