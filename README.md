@@ -8,7 +8,6 @@
 > My first assembler and interpreter applications.
 
 ## Example
-
 ```asm
 # Output "Hello" in console
 HELLO_WORLD:
@@ -36,29 +35,24 @@ HELLO_WORLD:
  END HELLO_WORLD
 ```
 
-
 After assembling the code above, when running it, the following result will appear:
 
 ![Screenshot](./screenshots/1.png)
 
 ## Assembler
 
-
 Converts the assembly code in byte-code.
 
 ```sh
 $ ./Assembler/Assembler/bin/Debug/Assembler.exe input-file.asm output-file.biz
 ```
-
 ## Interpreter
-
 
 Interprets the byte-code and shows the result in the console.
 
 ```sh
 $ ./BizMachineGUI/BizMachineGUI/bin/Debug/BizMachineGUI.exe output-file.biz
 ```
-
 
 ## :yum: How to contribute
 Have an idea? Found a bug? See [how to contribute][contributing].
