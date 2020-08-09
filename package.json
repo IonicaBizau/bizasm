@@ -1,6 +1,6 @@
 {
   "name": "bizasm",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "description": "My first assembler and interpreter applications.",
   "main": "lib/index.js",
   "scripts": {
